@@ -1,4 +1,4 @@
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, Navigate } from "react-router-dom";
 
 import PatientAppLayout from "layouts/PatientAppLayout";
 
@@ -14,6 +14,7 @@ import TransactionHistoryLayout from "pages/transaction-history/TransactionHisto
 import TransactionHistoryList from "pages/transaction-history/TransactionHistoryList";
 import MyPatientLayout from "pages/my-patients/MyPatientsLayout";
 import MyPatientsListPage from "pages/my-patients/MyPatientsListPage";
+import BookingPage from "pages/booking/BookingPage";
 
 function App() {
   return (
@@ -26,8 +27,9 @@ function App() {
       </Routes>
       <Routes>
         <Route path="/" element={<PatientAppLayout />}>
+          <Route index element={<Navigate to="/dashboard" />} />
           <Route path="dashboard" element={<DashboardPage />} />
-          <Route path="booking" element={<h1>Booking</h1>} />
+          <Route path="booking" element={<BookingPage />} />
           <Route path="ivf-track" element={<IVFTrackLayout />}>
             <Route index element={<IVFTrackListPage />} />
           </Route>

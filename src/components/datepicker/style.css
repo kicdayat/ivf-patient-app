@@ -1,0 +1,175 @@
+/* DayPicker styles */
+
+.DayPicker {
+  @apply bg-white inline-block
+}
+
+.DayPicker-wrapper {
+  @apply relative flex-row pb-1 select-none
+}
+
+.DayPicker-Months {
+  @apply flex flex-wrap justify-center
+}
+
+.DayPicker-Month {
+  @apply table mt-4 mx-4 border-none border-collapse select-none
+  
+}
+
+.DayPicker-NavBar {
+}
+
+.DayPicker-NavButton {
+  @apply absolute top-3.5 right-4 left-auto block mt-0.5 w-6 h-6 bg-center bg-no-repeat text-gray-600 cursor-pointer bg-contain hover:bg-gray-200 rounded
+  
+}
+
+/* .DayPicker-NavButton:hover {
+  opacity: 0.8;
+} */
+
+.DayPicker-NavButton--prev {
+  background-image: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIGNsYXNzPSJoLTYgdy02IiBmaWxsPSJub25lIiB2aWV3Qm94PSIwIDAgMjQgMjQiIHN0cm9rZT0iY3VycmVudENvbG9yIj4NCiAgPHBhdGggc3Ryb2tlLWxpbmVjYXA9InJvdW5kIiBzdHJva2UtbGluZWpvaW49InJvdW5kIiBzdHJva2Utd2lkdGg9IjIiIGQ9Ik0xNSAxOWwtNy03IDctNyIgLz4NCjwvc3ZnPg==');
+  @apply mr-7
+}
+
+.DayPicker-NavButton--next {
+  background-image: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIGNsYXNzPSJoLTYgdy02IiBmaWxsPSJub25lIiB2aWV3Qm94PSIwIDAgMjQgMjQiIHN0cm9rZT0iY3VycmVudENvbG9yIj4NCiAgPHBhdGggc3Ryb2tlLWxpbmVjYXA9InJvdW5kIiBzdHJva2UtbGluZWpvaW49InJvdW5kIiBzdHJva2Utd2lkdGg9IjIiIGQ9Ik05IDVsNyA3LTcgNyIgLz4NCjwvc3ZnPg==');
+}
+
+.DayPicker-NavButton--interactionDisabled {
+  display: none;
+}
+
+.DayPicker-Caption {
+  @apply table-caption mb-2 px-2 text-left
+
+}
+
+.DayPicker-Caption > div {
+  @apply text-lg font-semibold
+  
+}
+
+.DayPicker-Weekdays {
+  @apply table-header-group
+}
+
+.DayPicker-WeekdaysRow {
+  @apply table-row
+}
+
+.DayPicker-Weekday {
+  @apply table-cell p-2 text-gray-600 text-center text-sm
+  
+}
+
+.DayPicker-Weekday abbr[title] {
+  @apply border-b-0 no-underline
+  
+}
+
+.DayPicker-Body {
+  @apply table-row-group
+}
+
+.DayPicker-Week {
+  @apply table-row
+}
+
+.DayPicker-Day {
+  @apply table-cell p-2 rounded-full align-middle text-center cursor-pointer
+  
+}
+
+.DayPicker-WeekNumber {
+  @apply table-cell p-2 min-w-[1em] border-r-[1px] border-gray-200 text-gray-600 align-middle text-right text-sm cursor-pointer
+ 
+}
+
+.DayPicker--interactionDisabled .DayPicker-Day {
+  cursor: default;
+}
+
+.DayPicker-Footer {
+  @apply pt-2
+}
+
+.DayPicker-TodayButton {
+  @apply border-none bg-transparent bg-none shadow-none text-primary-600 text-sm cursor-pointer 
+}
+
+/* Default modifiers */
+
+.DayPicker-Day--today {
+  @apply text-primary-500 font-bold
+ 
+}
+
+.DayPicker-Day--outside {
+  color: #8B9898;
+  cursor: default;
+}
+
+.DayPicker-Day--disabled {
+  color: #DCE0E0;
+  cursor: default;
+  /* background-color: #eff1f1; */
+}
+
+/* Example modifiers */
+
+.DayPicker-Day--sunday {
+  background-color: #F7F8F8;
+}
+
+.DayPicker-Day--sunday:not(.DayPicker-Day--today) {
+  color: #DCE0E0;
+}
+
+.DayPicker-Day--selected:not(.DayPicker-Day--disabled):not(.DayPicker-Day--outside) {
+  @apply relative bg-primary-600 text-white hover:bg-primary-700
+
+}
+
+/* .DayPicker-Day--selected:not(.DayPicker-Day--disabled):not(.DayPicker-Day--outside):hover {
+  background-color: #51A0FA;
+} */
+
+.DayPicker:not(.DayPicker--interactionDisabled)
+  .DayPicker-Day:not(.DayPicker-Day--disabled):not(.DayPicker-Day--selected):not(.DayPicker-Day--outside):hover {
+    @apply bg-primary-200
+}
+
+/* DayPickerInput */
+
+.DayPickerInput {
+  @apply inline-block w-full
+}
+
+.DayPickerInput > input {
+  @apply appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-primary-600 focus:border-primary-600 sm:text-sm
+}
+
+.DayPickerInput-OverlayWrapper {
+  @apply relative 
+}
+
+.DayPickerInput-Overlay {
+  @apply absolute left-0 z-10 shadow-xl
+}
+
+.Selectable .DayPicker-Day--selected:not(.DayPicker-Day--start):not(.DayPicker-Day--end):not(.DayPicker-Day--outside) {
+  @apply bg-primary-100 text-primary-800
+  
+}
+.Selectable .DayPicker-Day {
+  @apply rounded-none
+}
+.Selectable .DayPicker-Day--start {
+  @apply rounded-tl-full rounded-bl-full
+}
+.Selectable .DayPicker-Day--end {
+  @apply rounded-tr-full rounded-br-full
+}

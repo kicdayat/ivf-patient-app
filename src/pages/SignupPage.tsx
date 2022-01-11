@@ -45,10 +45,10 @@ export default function SignupPage() {
   const handleRegister = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    const data = {
-      identity: email,
-      app: "IVF",
-    };
+    // const data = {
+    //   identity: email,
+    //   app: "IVF",
+    // };
 
     console.log("CALL API REGISTER");
 
@@ -69,11 +69,11 @@ export default function SignupPage() {
   const handleOTP = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    const data = {
-      identity: email,
-      verification_pin: pin,
-      app: "IVF",
-    };
+    // const data = {
+    //   identity: email,
+    //   verification_pin: pin,
+    //   app: "IVF",
+    // };
 
     console.log("Call API OTP");
 
@@ -98,15 +98,15 @@ export default function SignupPage() {
   const handleUpdateDetail = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    const data = {
-      email: email,
-      name: name,
-      password: password,
-      phone_number: phone,
-    };
+    // const data = {
+    //   email: email,
+    //   name: name,
+    //   password: password,
+    //   phone_number: phone,
+    // };
 
     console.log("Call API UPDATE DETAIL");
-
+    console.log({ token });
     // const res = await fetch(
     //   "https://elife-products.com:3900/v2/register/detail",
     //   {
@@ -119,10 +119,10 @@ export default function SignupPage() {
     //   }
     // );
     // const json = await res.json();
-    window.localStorage.setItem(
-      "accessToken",
-      "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjkzN2Q5YzU2LWRjY2QtNDk2OC1iMmE3LWI3MjRjNzQyNGMyMyIsIm5hbWUiOm51bGwsInBob25lX251bWJlciI6Iis2Mjg1MjcxNDA0MTcwIiwiZW1haWwiOiJrdG1jaHljNUB0ZW1wb3JhcnktbWFpbC5uZXQiLCJ1c2VybmFtZSI6Imt0bWNoeWM1Iiwicm9sZV9uYW1lIjpudWxsLCJ0eiI6IkFzaWEvSmFrYXRhIiwiaW5zdGl0dXRpb25fdHlwZSI6bnVsbCwiaWF0IjoxNjM0NjIzNzgwLCJwYXNzd29yZCI6IiQyYSQxMyRINW9haWZDVS83Z2V4MFdWUWtpMFJPQ0hQSkJ4aWhxY0J6bnZFZHJxSXdtQjYyMWs2Wk1TMiJ9.Hf8gGczYuOh80-hGORi6QaK5SPlodEZ8BdibWRvp7-KOw1qbguzL6E1FW3Sf2alFgrtUXIAFdNSbt5CWbjpjFUK4hnu8fKNk_UIL7UNTRbbXn9DqDJi4QtYTR3K2k_LhsHmX9be86Q-LCEtrjHXptMJ3N5gNq906RwypKFGTK4w"
-    );
+    // window.localStorage.setItem(
+    //   "accessToken",
+    //   "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjkzN2Q5YzU2LWRjY2QtNDk2OC1iMmE3LWI3MjRjNzQyNGMyMyIsIm5hbWUiOm51bGwsInBob25lX251bWJlciI6Iis2Mjg1MjcxNDA0MTcwIiwiZW1haWwiOiJrdG1jaHljNUB0ZW1wb3JhcnktbWFpbC5uZXQiLCJ1c2VybmFtZSI6Imt0bWNoeWM1Iiwicm9sZV9uYW1lIjpudWxsLCJ0eiI6IkFzaWEvSmFrYXRhIiwiaW5zdGl0dXRpb25fdHlwZSI6bnVsbCwiaWF0IjoxNjM0NjIzNzgwLCJwYXNzd29yZCI6IiQyYSQxMyRINW9haWZDVS83Z2V4MFdWUWtpMFJPQ0hQSkJ4aWhxY0J6bnZFZHJxSXdtQjYyMWs2Wk1TMiJ9.Hf8gGczYuOh80-hGORi6QaK5SPlodEZ8BdibWRvp7-KOw1qbguzL6E1FW3Sf2alFgrtUXIAFdNSbt5CWbjpjFUK4hnu8fKNk_UIL7UNTRbbXn9DqDJi4QtYTR3K2k_LhsHmX9be86Q-LCEtrjHXptMJ3N5gNq906RwypKFGTK4w"
+    // );
 
     navigate("/dashboard");
   };
