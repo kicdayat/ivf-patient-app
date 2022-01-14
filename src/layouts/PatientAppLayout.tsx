@@ -39,7 +39,7 @@ const PatientAppLayout = () => {
                 <div className="flex justify-between h-16">
                   <div className="flex">
                     <div className="flex-shrink-0 flex items-center">
-                      <Link to="/">
+                      <a href={process.env.REACT_APP_WEBSITE_URL}>
                         <img
                           className="block lg:hidden h-10 w-auto"
                           src="/asha-ivf.png"
@@ -50,7 +50,7 @@ const PatientAppLayout = () => {
                           src="/asha-ivf.png"
                           alt="ASHA IVF"
                         />
-                      </Link>
+                      </a>
                     </div>
                     <div className="hidden sm:-my-px sm:ml-6 sm:flex sm:space-x-8">
                       {navigation.map((item) => (
