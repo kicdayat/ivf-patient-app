@@ -33,8 +33,6 @@ const schedules = [
 const DashboardPage = () => {
   const { user } = useAuth();
 
-  console.log({ user });
-
   return (
     <>
       <h1 className="text-2xl font-bold">Dashboard</h1>
