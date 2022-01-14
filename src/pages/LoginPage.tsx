@@ -1,20 +1,51 @@
-import { Link } from "react-router-dom";
+import { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import toast from "react-hot-toast";
+
 import { FormLabel, Input } from "components/forms";
 import { Button, SsoButton } from "components/elements";
+import { useAuth } from "contexts/authContext";
 
 const LoginPage = () => {
+  const navigate = useNavigate();
+  const { login, user } = useAuth();
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
+
+  // TODO: Handle Storing Token
+  const handleLogin = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+
+    setIsLoading(true);
+    try {
+      await login({ email, password });
+      setIsLoading(false);
+      toast.success("You are logged in!");
+      navigate("/dashboard");
+    } catch (error: any) {
+      setIsLoading(false);
+      toast.error(error.message || "Login failed");
+    }
+  };
+
+  console.log({ user });
+
   return (
     <div className="min-h-screen bg-primary-100 flex flex-col justify-center py-12 sm:px-6 lg:px-8">
       <div className="sm:mx-auto sm:w-full sm:max-w-md">
         <div className="bg-white py-8 px-4 shadow sm:rounded-lg sm:px-10">
           <div className="sm:mx-auto sm:w-full sm:max-w-md">
-            <Link to="/" className="flex justify-center -ml-8">
+            <a
+              href={process.env.REACT_APP_WEBSITE_URL}
+              className="flex justify-center -ml-8"
+            >
               <img
                 className="h-14 object-contain"
                 src="/asha-ivf.png"
                 alt="Logo Asha IVF"
               />
-            </Link>
+            </a>
             <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900">
               Sign in to your account
             </h2>
@@ -30,20 +61,29 @@ const LoginPage = () => {
           </div>
           <form
             className="mt-8 space-y-6 accent-primary"
-            action="#"
-            method="POST"
+            onSubmit={handleLogin}
           >
             <div>
               <FormLabel htmlFor="email">Email Address</FormLabel>
               <div className="mt-1">
-                <Input id="email" type="email" />
+                <Input
+                  id="email"
+                  type="email"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                />
               </div>
             </div>
 
             <div>
               <FormLabel htmlFor="password">Password</FormLabel>
               <div className="mt-1">
-                <Input id="password" type="password" />
+                <Input
+                  id="password"
+                  type="password"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                />
               </div>
             </div>
 
@@ -59,7 +99,12 @@ const LoginPage = () => {
             </div>
 
             <div>
-              <Button shadow="small" className="w-full">
+              <Button
+                type="submit"
+                isLoading={isLoading}
+                shadow="small"
+                className="w-full"
+              >
                 Sign in
               </Button>
             </div>

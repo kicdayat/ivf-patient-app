@@ -2,8 +2,10 @@ import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
 
+import OtpInput from "components/otp-input/OtpInput";
 import { FormLabel, Input } from "components/forms";
 import { Button, SsoButton } from "components/elements";
+import { signup, verifyPin, updateUserDetail } from "services/auth-service";
 
 const metrics = [
   {
@@ -35,96 +37,66 @@ const metrics = [
 export default function SignupPage() {
   const navigate = useNavigate();
   const [email, setEmail] = useState("");
-  const [pin, setPin] = useState("");
+  const [otp, setOtp] = useState("");
   const [token, setToken] = useState("");
   const [name, setName] = useState("");
   const [phone, setPhone] = useState("");
   const [password, setPassword] = useState("");
   const [step, setStep] = useState(1);
+  const [isLoading, setIsLoading] = useState(false);
 
   const handleRegister = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    // const data = {
-    //   identity: email,
-    //   app: "IVF",
-    // };
-
-    console.log("CALL API REGISTER");
-
-    // const res = await fetch('https://elife-products.com:3900/v2/register', {
-    //   method: "POST",
-    //   headers: {
-    //     "Content-type": "application/json"
-    //   },
-    //   body: JSON.stringify(data)
-    // })
-    // const json = await res.json();
-    toast.success(
-      "OTP sent to your email, please check your INBOX or SPAM in registered email."
-    );
-    setStep(2);
+    setIsLoading(true);
+    try {
+      const res = await signup({ identity: email });
+      setIsLoading(false);
+      toast.success(res.message);
+      setStep(2);
+    } catch (error: any) {
+      setIsLoading(false);
+      console.log(error);
+      toast.error(error.message);
+    }
   };
 
   const handleOTP = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    // const data = {
-    //   identity: email,
-    //   verification_pin: pin,
-    //   app: "IVF",
-    // };
-
-    console.log("Call API OTP");
-
-    // const res = await fetch(
-    //   "https://elife-products.com:3900/v2/register/verify",
-    //   {
-    //     method: "POST",
-    //     headers: {
-    //       "Content-type": "application/json",
-    //     },
-    //     body: JSON.stringify(data),
-    //   }
-    // );
-    // const json = await res.json();
-    // setToken(json.data);
-    setToken(
-      "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xlX25hbWUiOm51bGwsInR6IjoiQXNpYS9KYWthdGEiLCJpbnN0aXR1dGlvbl90eXBlIjpudWxsLCJpYXQiOjE2MzQ2MTM0NDN9.A1krvyiCxLr-uptXFwXcVwLPb4idYRgVsy4cC3WhkwwP_0HaWs2nDuadmOSgoBcRsfyZmajoHA5_Fq6adF8sJpIvqy1ztVwhH9rz6XFLr0hDPuYm0qPYzWM1B7_yTpB4Q45ako-M8hLI7VtKL_DRr2kBq4Gympq2b2Sp-70WSC0"
-    );
-    setStep(3);
+    setIsLoading(true);
+    try {
+      const res = await verifyPin({ identity: email, verification_pin: otp });
+      setToken(res.data);
+      setIsLoading(false);
+      setStep(3);
+    } catch (error: any) {
+      setIsLoading(false);
+      console.log(error);
+      toast.error(error.message);
+    }
   };
 
   const handleUpdateDetail = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    // const data = {
-    //   email: email,
-    //   name: name,
-    //   password: password,
-    //   phone_number: phone,
-    // };
-
-    console.log("Call API UPDATE DETAIL");
-    console.log({ token });
-    // const res = await fetch(
-    //   "https://elife-products.com:3900/v2/register/detail",
-    //   {
-    //     method: "PUT",
-    //     headers: {
-    //       "Content-type": "application/json",
-    //       "Authorization": `Bearer ${token}`
-    //     },
-    //     body: JSON.stringify(data),
-    //   }
-    // );
-    // const json = await res.json();
-    // window.localStorage.setItem(
-    //   "accessToken",
-    //   "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjkzN2Q5YzU2LWRjY2QtNDk2OC1iMmE3LWI3MjRjNzQyNGMyMyIsIm5hbWUiOm51bGwsInBob25lX251bWJlciI6Iis2Mjg1MjcxNDA0MTcwIiwiZW1haWwiOiJrdG1jaHljNUB0ZW1wb3JhcnktbWFpbC5uZXQiLCJ1c2VybmFtZSI6Imt0bWNoeWM1Iiwicm9sZV9uYW1lIjpudWxsLCJ0eiI6IkFzaWEvSmFrYXRhIiwiaW5zdGl0dXRpb25fdHlwZSI6bnVsbCwiaWF0IjoxNjM0NjIzNzgwLCJwYXNzd29yZCI6IiQyYSQxMyRINW9haWZDVS83Z2V4MFdWUWtpMFJPQ0hQSkJ4aWhxY0J6bnZFZHJxSXdtQjYyMWs2Wk1TMiJ9.Hf8gGczYuOh80-hGORi6QaK5SPlodEZ8BdibWRvp7-KOw1qbguzL6E1FW3Sf2alFgrtUXIAFdNSbt5CWbjpjFUK4hnu8fKNk_UIL7UNTRbbXn9DqDJi4QtYTR3K2k_LhsHmX9be86Q-LCEtrjHXptMJ3N5gNq906RwypKFGTK4w"
-    // );
-
-    navigate("/dashboard");
+    setIsLoading(true);
+    try {
+      await updateUserDetail({
+        email,
+        name,
+        phone_number: phone,
+        password,
+        token,
+      });
+      setIsLoading(false);
+      toast.success("Registration Complete. Please Login");
+      navigate("/login");
+    } catch (error: any) {
+      setIsLoading(false);
+      console.log(error);
+      toast.error(error.message);
+    }
   };
 
   return (
@@ -167,13 +139,16 @@ export default function SignupPage() {
           <div className="sm:mx-auto sm:w-full sm:max-w-md">
             <div className="bg-white py-8 px-4 shadow sm:rounded-lg sm:px-10">
               <div className="sm:mx-auto sm:w-full sm:max-w-md">
-                <Link to="/" className="flex justify-center -ml-8">
+                <a
+                  href={process.env.REACT_APP_WEBSITE_URL}
+                  className="flex justify-center -ml-8"
+                >
                   <img
                     className="h-14 object-contain"
                     src="/asha-ivf.png"
                     alt="Logo Asha IVF"
                   />
-                </Link>
+                </a>
                 <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900">
                   Create new account
                 </h2>
@@ -205,7 +180,12 @@ export default function SignupPage() {
                   </div>
 
                   <div>
-                    <Button type="submit" shadow="small" className="w-full">
+                    <Button
+                      type="submit"
+                      shadow="small"
+                      className="w-full"
+                      isLoading={isLoading}
+                    >
                       Sign up
                     </Button>
                   </div>
@@ -216,19 +196,24 @@ export default function SignupPage() {
                   className="mt-8 space-y-6 accent-primary"
                 >
                   <div>
-                    <FormLabel htmlFor="otp">OTP</FormLabel>
-                    <div className="mt-1">
-                      <Input
-                        id="otp"
-                        type="text"
-                        value={pin}
-                        onChange={(e) => setPin(e.target.value)}
-                      />
-                    </div>
+                    <OtpInput
+                      value={otp}
+                      onChange={setOtp}
+                      numInputs={6}
+                      isInputNum
+                      inputStyle="text-2xl mx-1 w-12 p-2 border rounded-md border-gray-300 font-medium"
+                      containerStyle="flex justify-center mb-4"
+                      // separator={<span>-</span>}
+                    />
                   </div>
 
                   <div>
-                    <Button type="submit" shadow="small" className="w-full">
+                    <Button
+                      type="submit"
+                      shadow="small"
+                      className="w-full"
+                      isLoading={isLoading}
+                    >
                       Verify
                     </Button>
                   </div>
@@ -273,7 +258,12 @@ export default function SignupPage() {
                   </div>
 
                   <div>
-                    <Button type="submit" shadow="small" className="w-full">
+                    <Button
+                      type="submit"
+                      shadow="small"
+                      className="w-full"
+                      isLoading={isLoading}
+                    >
                       Submit
                     </Button>
                   </div>

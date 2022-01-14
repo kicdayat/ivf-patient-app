@@ -3,12 +3,8 @@ import { Disclosure, Menu, Transition } from "@headlessui/react";
 import { BellIcon, MenuIcon, XIcon } from "@heroicons/react/outline";
 import { Link, useLocation, Outlet } from "react-router-dom";
 
-const user = {
-  name: "Chelsea Hagon",
-  email: "chelseahagon@example.com",
-  imageUrl:
-    "https://images.unsplash.com/photo-1550525811-e5869dd03032?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80",
-};
+import { useAuth } from "contexts/authContext";
+
 const navigation = [
   { name: "Dashboard", href: "/dashboard" },
   { name: "Booking", href: "/booking" },
@@ -16,17 +12,13 @@ const navigation = [
   { name: "Transaction History", href: "/transaction-history" },
   { name: "My Patients", href: "/my-patients" },
 ];
-const userNavigation = [
-  { name: "Your Profile", href: "#" },
-  { name: "Settings", href: "#" },
-  { name: "Sign out", href: "#" },
-];
 
 function classNames(...classes: string[]) {
   return classes.filter(Boolean).join(" ");
 }
 
 const PatientAppLayout = () => {
+  const { user, logout } = useAuth();
   const { pathname } = useLocation();
 
   return (
@@ -96,8 +88,8 @@ const PatientAppLayout = () => {
                           <span className="sr-only">Open user menu</span>
                           <img
                             className="h-8 w-8 rounded-full"
-                            src={user.imageUrl}
-                            alt=""
+                            src="https://images.unsplash.com/photo-1550525811-e5869dd03032?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
+                            alt={user?.name}
                           />
                         </Menu.Button>
                       </div>
@@ -111,21 +103,32 @@ const PatientAppLayout = () => {
                         leaveTo="transform opacity-0 scale-95"
                       >
                         <Menu.Items className="origin-top-right absolute right-0 mt-2 w-48 rounded-md shadow-lg py-1 bg-white ring-1 ring-black ring-opacity-5 focus:outline-none">
-                          {userNavigation.map((item) => (
-                            <Menu.Item key={item.name}>
-                              {({ active }) => (
-                                <a
-                                  href={item.href}
-                                  className={classNames(
-                                    active ? "bg-gray-100" : "",
-                                    "block px-4 py-2 text-sm text-gray-700"
-                                  )}
-                                >
-                                  {item.name}
-                                </a>
-                              )}
-                            </Menu.Item>
-                          ))}
+                          <Menu.Item>
+                            {({ active }) => (
+                              <Link
+                                to="/my-profile"
+                                className={classNames(
+                                  active ? "bg-gray-100" : "",
+                                  "block px-4 py-2 text-sm text-gray-700"
+                                )}
+                              >
+                                My Profile
+                              </Link>
+                            )}
+                          </Menu.Item>
+                          <Menu.Item>
+                            {({ active }) => (
+                              <button
+                                onClick={logout}
+                                className={classNames(
+                                  active ? "bg-gray-100" : "",
+                                  "w-full text-left block px-4 py-2 text-sm text-gray-700"
+                                )}
+                              >
+                                Logout
+                              </button>
+                            )}
+                          </Menu.Item>
                         </Menu.Items>
                       </Transition>
                     </Menu>
@@ -171,16 +174,16 @@ const PatientAppLayout = () => {
                     <div className="flex-shrink-0">
                       <img
                         className="h-10 w-10 rounded-full"
-                        src={user.imageUrl}
-                        alt=""
+                        src="https://images.unsplash.com/photo-1550525811-e5869dd03032?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
+                        alt={user?.name}
                       />
                     </div>
                     <div className="ml-3">
                       <div className="text-base font-medium text-gray-800">
-                        {user.name}
+                        {user?.name}
                       </div>
                       <div className="text-sm font-medium text-gray-500">
-                        {user.email}
+                        {user?.email}
                       </div>
                     </div>
                     <button
@@ -192,16 +195,19 @@ const PatientAppLayout = () => {
                     </button>
                   </div>
                   <div className="mt-3 space-y-1">
-                    {userNavigation.map((item) => (
-                      <Disclosure.Button
-                        key={item.name}
-                        as="a"
-                        href={item.href}
-                        className="block px-4 py-2 text-base font-medium text-gray-500 hover:text-gray-800 hover:bg-gray-100"
-                      >
-                        {item.name}
-                      </Disclosure.Button>
-                    ))}
+                    <Disclosure.Button
+                      as="a"
+                      href="#"
+                      className="block px-4 py-2 text-base font-medium text-gray-500 hover:text-gray-800 hover:bg-gray-100"
+                    >
+                      My Profile
+                    </Disclosure.Button>
+                    <Disclosure.Button
+                      onClick={logout}
+                      className="block px-4 py-2 text-base font-medium text-gray-500 hover:text-gray-800 hover:bg-gray-100"
+                    >
+                      Log out
+                    </Disclosure.Button>
                   </div>
                 </div>
               </Disclosure.Panel>

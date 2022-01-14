@@ -81,7 +81,7 @@ const BookingPage = () => {
                     setSelectedRange={setSelectedRange}
                     close={() => {}}
                   /> */}
-                      <div className="mt-1 border border-gray-300 rounded-md shadow-sm p-1">
+                      <div className="mt-1 border border-gray-300 rounded-md shadow-sm p-0.5">
                         <RangeDayPicker range={range} setRange={setRange} />
                       </div>
                     </div>

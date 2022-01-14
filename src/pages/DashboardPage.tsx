@@ -1,13 +1,15 @@
 import { Link } from "react-router-dom";
 import { CalendarIcon } from "@heroicons/react/outline";
 
-const user = {
-  name: "Chelsea Hagon",
-  email: "chelseahagon@example.com",
-  role: "Human Resources Manager",
-  imageUrl:
-    "https://images.unsplash.com/photo-1550525811-e5869dd03032?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80",
-};
+import { useAuth } from "contexts/authContext";
+
+// const user = {
+//   name: "Chelsea Hagon",
+//   email: "chelseahagon@example.com",
+//   role: "Human Resources Manager",
+//   imageUrl:
+//   "https://images.unsplash.com/photo-1550525811-e5869dd03032?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80",
+// };
 
 const schedules = [
   {
@@ -29,6 +31,10 @@ const schedules = [
 ];
 
 const DashboardPage = () => {
+  const { user } = useAuth();
+
+  console.log({ user });
+
   return (
     <>
       <h1 className="text-2xl font-bold">Dashboard</h1>
@@ -48,8 +54,8 @@ const DashboardPage = () => {
                     <div className="flex-shrink-0">
                       <img
                         className="mx-auto h-20 w-20 rounded-full"
-                        src={user.imageUrl}
-                        alt=""
+                        src="https://images.unsplash.com/photo-1550525811-e5869dd03032?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
+                        alt={user?.name}
                       />
                     </div>
                     <div className="mt-4 text-center sm:mt-0 sm:pt-1 sm:text-left">
@@ -57,10 +63,10 @@ const DashboardPage = () => {
                         Welcome back,
                       </p>
                       <p className="text-xl font-bold text-gray-900 sm:text-2xl">
-                        {user.name}
+                        {user?.name}
                       </p>
                       <p className="text-sm font-medium text-gray-600">
-                        {user.role}
+                        {user?.email}
                       </p>
                     </div>
                   </div>
